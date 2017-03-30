@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
+# Visual Studio 2015
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SApiClient.CSharp", "SApiClient.CSharp.csproj", "{2BE63604-AAAE-6B06-E9A5-D3E354898A9E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Speech", "..\Speech\Speech.csproj", "{75C5ABB7-650C-444F-9657-A4A054F67E99}"

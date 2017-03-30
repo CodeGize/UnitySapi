@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Diagnostics;
-using System.Text;
+using Stardust;
 using UnityEngine;
 
-public class Speecher : MonoBehaviour, SocketExtra.INetComponent
+public class Speecher : MonoBehaviour, INetComponent
 {
-    private SocketExtra m_socket;
+    private SocketClient m_socket;
     private Process m_process;
+
+    [Header("是否显示Speech.exe")]
+    public bool ServerDisplay;
 
     protected void Awake()
     {
@@ -16,24 +19,54 @@ public class Speecher : MonoBehaviour, SocketExtra.INetComponent
             StartInfo = new ProcessStartInfo
             {
                 FileName = "speech.exe",
-                CreateNoWindow = true,
-                WindowStyle = ProcessWindowStyle.Hidden
+                CreateNoWindow = !ServerDisplay,
+                WindowStyle = ServerDisplay ? ProcessWindowStyle.Normal : ProcessWindowStyle.Hidden
             },
         };
         m_process.Start();
     }
 
     /***测试代码，可删除Start***/
-    protected IEnumerator Start()
+
+    public void OnGUI()
     {
-        yield return StartCoroutine(Connect());
-        Speak("test");
+        if (GUILayout.Button("Connect"))
+        {
+            StartCoroutine(Connect());
+        }
+        if (GUILayout.Button("InitServer"))
+        {
+            StartCoroutine(InitServer());
+        }
+
+        if (GUILayout.Button("Speak"))
+        {
+            Speak("hello world");
+        }
+
+        if (GUILayout.Button("Recognize Start"))
+        {
+            Recognize(true);
+        }
+        if (GUILayout.Button("Recognize End"))
+        {
+            Recognize(false);
+        }
     }
+
     /***测试代码，可删除End***/
+
+    private void Recognize(bool tf)
+    {
+        var arg = new ByteInArg();
+        arg.Write(3);
+        arg.Write(tf ? 1 : 0);
+        NetSendMsg(arg.GetBuffer());
+    }
 
     public IEnumerator Connect()
     {
-        m_socket = new SocketExtra(this);
+        m_socket = new SocketClient(this);
         m_socket.Connect("127.0.0.1", 9903);
         while (!m_socket.Connected)
         {
@@ -41,10 +74,23 @@ public class Speecher : MonoBehaviour, SocketExtra.INetComponent
         }
     }
 
+    public IEnumerator InitServer()
+    {
+        var arg = new ByteInArg();
+        arg.Write(1);
+        NetSendMsg(arg.GetBuffer());
+        yield return 1;
+    }
+
     protected void OnDestroy()
     {
         if (m_process != null && !m_process.HasExited)
-            m_process.Kill();
+        {
+            var res = m_process.CloseMainWindow();
+            if (!res)
+                //m_process.Close();
+                m_process.Kill();
+        }
         m_process = null;
     }
 
@@ -61,18 +107,24 @@ public class Speecher : MonoBehaviour, SocketExtra.INetComponent
     {
         if (m_socket.Connected)
         {
-            var bytes = Encoding.Default.GetBytes(str);
-            m_socket.SendMsg(bytes);
+            var arg = new ByteInArg();
+            arg.Write(2);
+            arg.Write(str);
+            //var bytes = Encoding.Default.GetBytes(str);
+            NetSendMsg(arg.GetBuffer());
         }
     }
 
-    public bool NetReciveMsg(byte[] recivebuffer)
+    public bool NetReciveMsg(byte[] recivebuffer, int netID)
     {
+        var arg = new ByteOutArg(recivebuffer);
+        var str = arg.ReadString();
+        UnityEngine.Debug.Log(str);
         return true;
     }
 
     public bool NetSendMsg(byte[] sendbuffer)
     {
-        return true;
+        return m_socket.SendMsg(sendbuffer);
     }
 }
