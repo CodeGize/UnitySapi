@@ -46,3 +46,9 @@ Network Trash Folder
 Temporary Items
 .apdisk
 Unity3d使用SAPI语音在Windows上进行文本发音.docx
+/SApiClient/Library
+/SApiClient/Temp
+/SApiClient/.vs
+/Speech/bin
+/Speech/obj
+/Speech/.vs
