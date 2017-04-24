@@ -1,7 +1,9 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Stardust;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Speecher : MonoBehaviour, INetComponent
 {
@@ -26,37 +28,11 @@ public class Speecher : MonoBehaviour, INetComponent
         m_process.Start();
     }
 
-    /***测试代码，可删除Start***/
-
-    public void OnGUI()
-    {
-        if (GUILayout.Button("Connect"))
-        {
-            StartCoroutine(Connect());
-        }
-        if (GUILayout.Button("InitServer"))
-        {
-            StartCoroutine(InitServer());
-        }
-
-        if (GUILayout.Button("Speak"))
-        {
-            Speak("hello world");
-        }
-
-        if (GUILayout.Button("Recognize Start"))
-        {
-            Recognize(true);
-        }
-        if (GUILayout.Button("Recognize End"))
-        {
-            Recognize(false);
-        }
-    }
-
-    /***测试代码，可删除End***/
-
-    private void Recognize(bool tf)
+    /// <summary>
+    /// 开始或者结束语音识别功能
+    /// </summary>
+    /// <param name="tf"></param>
+    public void Recognize(bool tf)
     {
         var arg = new ByteInArg();
         arg.Write(3);
@@ -94,14 +70,14 @@ public class Speecher : MonoBehaviour, INetComponent
         m_process = null;
     }
 
-    public static Speecher Ins;
+    public static Speecher Ins { get; private set; }
 
-    public static void Speak(string str)
-    {
-#if UNITY_EDITOR||UNITY_STANDALONE_WIN
-        Ins.Speech(str);
-#endif
-    }
+    //    public void Speak(string str)
+    //    {
+    //#if UNITY_EDITOR||UNITY_STANDALONE_WIN
+    //        Ins.Speech(str);
+    //#endif
+    //    }
 
     public void Speech(string str)
     {
@@ -119,12 +95,30 @@ public class Speecher : MonoBehaviour, INetComponent
     {
         var arg = new ByteOutArg(recivebuffer);
         var str = arg.ReadString();
-        UnityEngine.Debug.Log(str);
+        ResList.Enqueue(str);
+        //UnityEngine.Debug.Log(str);
         return true;
+    }
+
+    public Queue<string> ResList = new Queue<string>();
+
+    public void Update()
+    {
+        if (ResList.Count > 0)
+        {
+            var str = ResList.Dequeue();
+            if (OnGetRecognize != null)
+                OnGetRecognize.Invoke(str);
+        }
     }
 
     public bool NetSendMsg(byte[] sendbuffer)
     {
         return m_socket.SendMsg(sendbuffer);
     }
+
+    public delegate void GetRecognize(string msg);
+    public GetRecognize OnGetRecognize;
+
+    public UnityEvent<string> OnGetRecognizeAct;
 }

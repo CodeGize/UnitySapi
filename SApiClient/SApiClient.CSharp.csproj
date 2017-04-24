@@ -76,9 +76,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\ChatRobot\TuLing\TuLingChatRobot.cs" />
+    <Compile Include="Assets\ChatRobot\TuLing\TuLingChatRobotManager.cs" />
     <Compile Include="Assets\Core\ByteInArg.cs" />
     <Compile Include="Assets\Core\SocketExtra.cs" />
     <Compile Include="Assets\Sapi\Speecher.cs" />
+    <Compile Include="Assets\Sapi\SpeecherManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

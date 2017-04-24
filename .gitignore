@@ -52,3 +52,4 @@ Unity3d使用SAPI语音在Windows上进行文本发音.docx
 /Speech/bin
 /Speech/obj
 /Speech/.vs
+/SApiClient/Output

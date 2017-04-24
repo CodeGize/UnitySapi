@@ -49,7 +49,7 @@ namespace Speech.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Microsoft Huihui Desktop")]
         public string SpeakVoice {
             get {
                 return ((string)(this["SpeakVoice"]));
