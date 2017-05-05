@@ -9,7 +9,7 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="SpeakVoice" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Microsoft Huihui Desktop</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Port" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">9903</Value>
@@ -20,6 +20,9 @@
   &lt;string&gt;Fire&lt;/string&gt;
   &lt;string&gt;发射&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="DefaultLang" Type="System.String" Scope="User">
+      <Value Profile="(Default)">zh-CN</Value>
     </Setting>
   </Settings>
 </SettingsFile>

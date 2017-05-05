@@ -49,7 +49,7 @@ namespace Speech.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Microsoft Huihui Desktop")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string SpeakVoice {
             get {
                 return ((string)(this["SpeakVoice"]));
@@ -82,6 +82,18 @@ namespace Speech.Properties {
             }
             set {
                 this["Keywords"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("zh-CN")]
+        public string DefaultLang {
+            get {
+                return ((string)(this["DefaultLang"]));
+            }
+            set {
+                this["DefaultLang"] = value;
             }
         }
     }

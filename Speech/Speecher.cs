@@ -28,7 +28,7 @@ namespace Speech
             }
             if (!selected)
             {
-                foreach (var install in installs.Where(install => install.VoiceInfo.Culture.Name == "en-US"))
+                foreach (var install in installs.Where(install => install.VoiceInfo.Culture.Name == Settings.Default.DefaultLang/*"en-US"*/))
                 {
                     m_speaker.SelectVoice(install.VoiceInfo.Name);
                     break;
