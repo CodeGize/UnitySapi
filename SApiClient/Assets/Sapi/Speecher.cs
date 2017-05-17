@@ -85,6 +85,7 @@ public class Speecher : MonoBehaviour, INetComponent
         {
             var arg = new ByteInArg();
             arg.Write(2);
+            arg.Write(0);
             arg.Write(str);
             //var bytes = Encoding.Default.GetBytes(str);
             NetSendMsg(arg.GetBuffer());
@@ -121,4 +122,22 @@ public class Speecher : MonoBehaviour, INetComponent
     public GetRecognize OnGetRecognize;
 
     public UnityEvent<string> OnGetRecognizeAct;
+
+    public IEnumerator Pause()
+    {
+        var arg = new ByteInArg();
+        arg.Write(2);
+        arg.Write(1);
+        NetSendMsg(arg.GetBuffer());
+        yield return 1;
+    }
+
+    public IEnumerator Resume()
+    {
+        var arg = new ByteInArg();
+        arg.Write(2);
+        arg.Write(2);
+        NetSendMsg(arg.GetBuffer());
+        yield return 1;
+    }
 }

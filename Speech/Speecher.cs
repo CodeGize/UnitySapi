@@ -40,5 +40,15 @@ namespace Speech
         {
             m_speaker.Speak(msg);
         }
+
+        public void Pause()
+        {
+            m_speaker.Pause();
+        }
+
+        public void Resume()
+        {
+            m_speaker.Resume();
+        }
     }
 }

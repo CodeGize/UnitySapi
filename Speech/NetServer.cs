@@ -60,9 +60,21 @@ namespace Speech
                     Init();
                     break;
                 case EmCmd.Speak:
-                    var str = arg.ReadString();
-                    Console.WriteLine(str);
-                    m_speecher.Speak(str);
+                    var speakcmd= arg.ReadInt32();
+                    if (speakcmd == 0)
+                    {
+                        var str = arg.ReadString();
+                        Console.WriteLine(str);
+                        m_speecher.Speak(str);
+                    }
+                    else if (speakcmd == 1)
+                    {
+                        m_speecher.Pause();
+                    }
+                    else if(speakcmd==2)
+                    {
+                        m_speecher.Resume();
+                    }
                     return true;
                 case EmCmd.Recognize:
                     var scmd = arg.ReadInt32();

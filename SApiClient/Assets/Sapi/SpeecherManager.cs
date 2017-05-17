@@ -29,6 +29,16 @@ public class SpeecherManager : MonoBehaviour
             Speecher.Speech(m_msg);
         }
 
+        if (GUILayout.Button("Pause"))
+        {
+            StartCoroutine(Speecher.Pause());
+        }
+
+        if (GUILayout.Button("Resume"))
+        {
+            StartCoroutine(Speecher.Resume());
+        }
+
         if (GUILayout.Button("Recognize Start"))
         {
             Speecher.Recognize(true);
