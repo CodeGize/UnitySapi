@@ -36,9 +36,17 @@ namespace Speech
             }
         }
 
+        private Prompt m_curPrompt;
+        /// <summary>
+        /// 读一个文本
+        /// </summary>
+        /// <param name="msg"></param>
         public void Speak(string msg)
         {
-            m_speaker.Speak(msg);
+            if (m_curPrompt != null)
+                m_speaker.SpeakAsyncCancel(m_curPrompt);
+
+            m_curPrompt = m_speaker.SpeakAsync(msg);
         }
 
         public void Pause()
@@ -50,5 +58,7 @@ namespace Speech
         {
             m_speaker.Resume();
         }
+
+        public SynthesizerState State => m_speaker.State;
     }
 }
