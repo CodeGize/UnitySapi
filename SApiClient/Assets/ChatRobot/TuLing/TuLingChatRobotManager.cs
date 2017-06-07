@@ -1,22 +1,13 @@
 using UnityEngine;
 
-public class TuLingChatRobotManager : SpeecherManager
+namespace Assets.ChatRobot.TuLing
 {
-    public override void OnGUI()
+    public class TuLingChatRobotManager : WebChatBotManager<TuLingChatRobot>
     {
-       base.OnGUI();
-
-        if (GUILayout.Button("Tuling"))
+        protected override void OnGetResponse(string res)
         {
-            var robot = GetComponent<TuLingChatRobot>();
-            Speecher.OnGetRecognize = robot.Require;
-            robot.OnGetResponse = OnGetResponse;
+            var response = JsonUtility.FromJson<TuLingResponseBase>(res);
+            Speecher.Speech(response.text);
         }
-    }
-
-    private void OnGetResponse(string res)
-    {
-        var response = JsonUtility.FromJson<TuLingResponseBase>(res);
-        Speecher.Speech(response.text);
     }
 }
