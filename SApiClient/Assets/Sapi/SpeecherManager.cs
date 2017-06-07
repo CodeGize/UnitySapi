@@ -4,7 +4,7 @@ public class SpeecherManager : MonoBehaviour
 {
     protected Speecher Speecher;
 
-    internal void Awake()
+    protected virtual void Awake()
     {
         Speecher = GetComponent<Speecher>();
     }
