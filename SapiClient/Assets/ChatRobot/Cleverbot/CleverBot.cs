@@ -11,7 +11,7 @@ namespace Assets.ChatRobot.Cleverbot
 
         public override string Key
         {
-            get { return "CC2me_S7B1Qh1diYLI9CJBZxXgQ"; }
+            get { return "请填写自己申请的key"; }
         }
 
         public string Cs { get; set; }
