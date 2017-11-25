@@ -17,12 +17,19 @@ namespace Speech
 
         public void Init()
         {
-            m_speecher = new Speecher();
-            m_recognizer = new Recognizer
+            try
             {
-                OnRecognized = OnRecognized
-            };
-            Console.WriteLine("初始化完成");
+                m_speecher = new Speecher();
+                m_recognizer = new Recognizer
+                {
+                    OnRecognized = OnRecognized
+                };
+                Console.WriteLine("初始化完成");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         private void OnRecognized(string text)
@@ -52,6 +59,7 @@ namespace Speech
 
         public bool NetReciveMsg(byte[] recivebuffer, int netID)
         {
+
             var arg = new ByteOutArg(recivebuffer);
             var cmd = arg.ReadInt32();
             switch ((EmCmd)cmd)
@@ -60,7 +68,7 @@ namespace Speech
                     Init();
                     break;
                 case EmCmd.Speak:
-                    var speakcmd= arg.ReadInt32();
+                    var speakcmd = arg.ReadInt32();
                     if (speakcmd == 0)
                     {
                         var str = arg.ReadString();
@@ -71,7 +79,7 @@ namespace Speech
                     {
                         m_speecher.Pause();
                     }
-                    else if(speakcmd==2)
+                    else if (speakcmd == 2)
                     {
                         m_speecher.Resume();
                     }

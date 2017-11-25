@@ -10,12 +10,30 @@ namespace Speech
             var server = new NetServer();
             server.StartServer();
 
+            //try
+            //{
+            //    var m_speecher = new Speecher();
+            //    var m_recognizer = new Recognizer
+            //    {
+            //        OnRecognized = OnRecognized
+            //    };
+            //    Console.WriteLine("初始化完成");
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e.Message);
+            //}
             while (true)
             {
                 var res = Console.ReadLine();
                 if (res == "exit")
                     break;
             }
+        }
+
+        private static void OnRecognized(string text)
+        {
+            Console.WriteLine(text);
         }
     }
 }

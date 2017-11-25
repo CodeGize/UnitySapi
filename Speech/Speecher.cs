@@ -49,6 +49,11 @@ namespace Speech
             m_curPrompt = m_speaker.SpeakAsync(msg);
         }
 
+        public SynthesizerState GetState()
+        {
+            return m_speaker.State;
+        }
+
         public void Pause()
         {
             m_speaker.Pause();
